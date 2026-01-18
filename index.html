@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷静态网页展示 | Cool Static Web Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 300;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+            animation: fadeInUp 2s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            opacity: 0.9;
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 2rem;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .floating-elements {
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            left: 20%;
+            animation-delay: 1s;
+            width: 40px;
+            height: 40px;
+        }
+
+        .floating-element:nth-child(3) {
+            left: 30%;
+            animation-delay: 2s;
+            width: 80px;
+            height: 80px;
+        }
+
+        .floating-element:nth-child(4) {
+            left: 50%;
+            animation-delay: 3s;
+            width: 50px;
+            height: 50px;
+        }
+
+        .floating-element:nth-child(5) {
+            left: 70%;
+            animation-delay: 4s;
+            width: 70px;
+            height: 70px;
+        }
+
+        .floating-element:nth-child(6) {
+            left: 90%;
+            animation-delay: 5s;
+            width: 45px;
+            height: 45px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .interactive-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .wave-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23FFFFFF"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23FFFFFF"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23FFFFFF"></path></svg>');
+            background-size: cover;
+        }
+
+        .footer {
+            background: #2c3e50;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interactive-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div>
+            <h1>炫酷静态网页</h1>
+            <p>展示现代HTML/CSS的无限魅力</p>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Features Section -->
+        <section class="section">
+            <h2>特色功能</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>渐变动画</h3>
+                    <p>使用CSS渐变和动画创建动态背景效果，让页面充满活力和现代感。</p>
+                </div>
+                <div class="card">
+                    <h3>悬浮效果</h3>
+                    <p>通过transform和transition实现优雅的悬浮和交互效果，提升用户体验。</p>
+                </div>
+                <div class="card">
+                    <h3>响应式设计</h3>
+                    <p>完美适配各种设备尺寸，确保在手机、平板和桌面端都有出色表现。</p>
+                </div>
+                <div class="card">
+                    <h3>毛玻璃效果</h3>
+                    <p>使用backdrop-filter实现现代毛玻璃效果，营造层次感和深度。</p>
+                </div>
+                <div class="card">
+                    <h3>3D变换</h3>
+                    <p>通过CSS 3D变换创造立体感和空间效果，让界面更加生动。</p>
+                </div>
+                <div class="card">
+                    <h3>波浪动画</h3>
+                    <p>SVG波浪背景和流畅动画相结合，创造视觉冲击力。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Floating Elements Demo -->
+        <section class="section">
+            <h2>浮动元素演示</h2>
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+        </section>
+
+        <!-- Interactive Buttons -->
+        <section class="section">
+            <h2>交互按钮</h2>
+            <div class="interactive-buttons">
+                <button class="btn" onclick="alert('按钮1被点击！')">炫酷按钮1</button>
+                <button class="btn" onclick="alert('按钮2被点击！')">炫酷按钮2</button>
+                <button class="btn" onclick="alert('按钮3被点击！')">炫酷按钮3</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Wave Section -->
+    <section class="wave-section">
+        <div class="wave"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 炫酷静态网页展示 | 使用现代HTML/CSS技术构建</p>
+        </div>
+    </footer>
+
+    <script>
+        // 添加一些简单的JavaScript交互
+        document.addEventListener('DOMContentLoaded', function() {
+            // 添加滚动监听
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const rate = scrolled * -0.5;
+
+                // 简单的视差效果
+                document.querySelector('.hero').style.transform = `translateY(${rate}px)`;
+            });
+
+            // 为卡片添加点击效果
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                });
+            });
+
+            // 添加鼠标跟随效果
+            document.addEventListener('mousemove', function(e) {
+                const cursor = document.querySelector('.hero');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+
+                cursor.style.backgroundPosition = `${mouseX * 100}% ${mouseY * 100}%`;
+            });
+        });
+    </script>
+</body>
+</html>
